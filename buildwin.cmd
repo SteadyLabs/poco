@@ -35,7 +35,7 @@ echo or run "%%VSnnCOMNTOOLS%%\vcvars32.bat" first.
 goto :EOF)
 
 rem Change OPENSSL_DIR to match your setup
-set OPENSSL_DIR=c:\OpenSSL
+set OPENSSL_DIR=c:\OpenSSL-Win64
 set OPENSSL_INCLUDE=%OPENSSL_DIR%\include
 set OPENSSL_LIB=%OPENSSL_DIR%\lib\VC
 set INCLUDE=%INCLUDE%;%OPENSSL_INCLUDE%
