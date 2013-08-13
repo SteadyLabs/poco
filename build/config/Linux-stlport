@@ -1,31 +1,30 @@
 #
-# $Id: //poco/1.4/build/config/NIOS2-Linux#2 $
+# $Id: //poco/1.4/build/config/Linux-stlport#2 $
 #
-# NIOS2-Linux
+# Linux
 #
-# Make settings for Nios2 Linux with gcc 4.1.2
+# Make settings for Linux 2.6/gcc 3.3
 #
 #
 
 #
 # General Settings
 #
-LINKMODE = CUSTOM
-DEFAULT_TARGET = static_release
-POCO_TARGET_OSNAME = Linux
-POCO_TARGET_OSARCH = NIOS2
+LINKMODE ?= SHARED
+STLPORT_INCLUDE    = /usr/local/include/stlport
+STLPORT_LIB        = /usr/local/lib
 
 #
 # Define Tools
 #
-CC      = nios2-linux-gnu-gcc
-CXX     = nios2-linux-gnu-g++
+CC      = gcc
+CXX     = g++
 LINK    = $(CXX)
-LIB     = nios2-linux-gnu-ar -cr
-RANLIB  = nios2-linux-gnu-ranlib
+LIB     = ar -cr
+RANLIB  = ranlib
 SHLIB   = $(CXX) -shared -Wl,-soname,$(notdir $@) -o $@
 SHLIBLN = $(POCO_BASE)/build/script/shlibln
-STRIP   = nios2-linux-gnu-strip
+STRIP   = strip
 DEP     = $(POCO_BASE)/build/script/makedepend.gcc 
 SHELL   = sh
 RM      = rm -rf
@@ -38,13 +37,14 @@ MKDIR   = mkdir -p
 SHAREDLIBEXT     = .so.$(target_version)
 SHAREDLIBLINKEXT = .so
 
+
 #
 # Compiler and Linker Flags
 #
-CFLAGS          = -mhw-mul -mhw-mulx -mhw-div
+CFLAGS          = 
 CFLAGS32        =
 CFLAGS64        =
-CXXFLAGS        = -Wall -Wno-sign-compare -mhw-mul -mhw-mulx -mhw-div
+CXXFLAGS        = -Wall -Wno-sign-compare 
 CXXFLAGS32      =
 CXXFLAGS64      =
 LINKFLAGS       =
@@ -66,9 +66,9 @@ RELEASEOPT_LINK = -O2
 #
 # System Specific Flags
 #
-SYSFLAGS = -D_XOPEN_SOURCE=500 -D_REENTRANT -D_THREAD_SAFE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -DPOCO_HAVE_FD_EPOLL
+SYSFLAGS = -I$(STLPORT_INCLUDE) -D_XOPEN_SOURCE=500 -D_REENTRANT -D_THREAD_SAFE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -DPOCO_HAVE_FD_EPOLL
 
 #
 # System Specific Libraries
 #
-SYSLIBS  = -lpthread -ldl -lrt
+SYSLIBS  = -L$(STLPORT_LIB) -lstlport -lpthread -ldl -lrt
